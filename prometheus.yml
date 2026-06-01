@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  # Jenkins metrics endpoint
+  - job_name: 'jenkins'
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['jenkins:8080']
+    basic_auth:
+      username: 'admin'
+      password: 'admin123'
+
+  # Self monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Node exporter (optional)
+  - job_name: 'docker-node'
+    static_configs:
+      - targets: ['host.docker.internal:9100']
